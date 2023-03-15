@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Faculties</title>
+    <link th:rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}">
+</head>
+<body>
+<h1>Faculties List</h1>
+<table id="faculties" class="table table-dark table-striped">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>director</th>
+        <th>students</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="f : ${faculties}">
+        <td th:text="${f.id}"></td>
+        <td th:text="${f.name}"></td>
+        <td th:text="${f.director}"></td>
+        <td><a th:href="@{/faculty_students/{id}(id=${f.id})}">students</a></td>
+    </tr>
+    </tbody>
+</table>
+<form action="add_faculty" method="post">
+    <label for="faculty_name">Name:</label>
+    <input type="text" name="name" id="faculty_name">
+    <label for="faculty_director">Director:</label>
+    <input type="text" name="director" id="faculty_director">
+    <input type="submit" value="Add" class="btn btn-primary">
+</form>
+<script th:src="@{/webjars/jquery/3.6.3/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+</body>
+</html>
