@@ -3,36 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Faculties</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <link th:rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}">
 </head>
 <body>
 <h1>Faculties List</h1>
-<table id="faculties" class="table table-dark table-striped">
-    <thead>
-    <tr>
-        <th>id</th>
-        <th>name</th>
-        <th>director</th>
-        <th>students</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="f : ${faculties}">
-        <td th:text="${f.id}"></td>
-        <td th:text="${f.name}"></td>
-        <td th:text="${f.director}"></td>
-        <td><a th:href="@{/faculty_students/{id}(id=${f.id})}">students</a></td>
-    </tr>
-    </tbody>
-</table>
-<form action="add_faculty" method="post">
-    <label for="faculty_name">Name:</label>
-    <input type="text" name="name" id="faculty_name">
-    <label for="faculty_director">Director:</label>
-    <input type="text" name="director" id="faculty_director">
-    <input type="submit" value="Add" class="btn btn-primary">
-</form>
+<div class="left-right">
+    <div class="left70">
+        <table id="faculties" class="table table-striped table-hover table-sm">
+            <thead class="table-dark">
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>director</th>
+                <th>students</th>
+                <th>edit</th>
+                <th>delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="f : ${faculties}">
+                <td th:text="${f.id}"></td>
+                <td th:text="${f.name}"></td>
+                <td th:text="${f.director}"></td>
+                <td><a th:href="@{/faculty_students/{id}(id=${f.id})}">students</a></td>
+                <!--                http://localhost:8080/faculty_students/5   -->
+                <td><a th:href="@{/edit_faculty(id=${f.id})}" class="btn btn-info btn-sm">Edit</a></td>
+                <!--                http://localhost:8080/edit_faculty?id=5    -->
+                <td><a th:href="@{/delete_faculty/{id}(id=${f.id})}" class="btn btn-danger btn-sm">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="right30">
+        <form action="add_faculty" method="post">
+            <label for="faculty_name">Name:</label><br/>
+            <input type="text" name="name" id="faculty_name"><br/>
+            <label for="faculty_director">Director:</label><br/>
+            <input type="text" name="director" id="faculty_director"><br/>
+            <input type="submit" value="Add" class="btn btn-primary">
+        </form>
+    </div>
+</div>
 <script th:src="@{/webjars/jquery/3.6.3/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/popper.js/1.16.1-1/umd/popper.min.js}"></script>
 </body>
 </html>

@@ -1,11 +1,15 @@
-table {
-    background-color: darkblue;
+.left70 {
+    width: 70%;
+    margin-right: auto;
 }
 
-th {
-    background-color: azure;
+.right30 {
+    position: absolute;
+    left: 70%;
+    top: 0;
+    margin-left: 10px;
 }
 
-td {
-    background-color: antiquewhite;
+.left-right {
+    position: relative;
 }

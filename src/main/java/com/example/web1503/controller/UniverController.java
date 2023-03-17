@@ -1,7 +1,9 @@
 package com.example.web1503.controller;
 
 import com.example.web1503.entities.Faculty;
+import com.example.web1503.entities.Student;
 import com.example.web1503.repositories.FacultyRepository;
+import com.example.web1503.repositories.StudentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +20,20 @@ import java.util.Optional;
 public class UniverController {
 
     FacultyRepository facultyRepository;
+    private final StudentRepository studentRepository;
 
     @GetMapping("/faculties")
     public String faculties(Model model) {
         List<Faculty> faculties = facultyRepository.findAll();
         model.addAttribute("faculties", faculties);
         return "faculties";
+    }
+
+    @GetMapping("/students")
+    public String allStudents(Model model) {
+        List<Student> students = studentRepository.findAll();
+        model.addAttribute("students", students);
+        return "allstudents";
     }
 
     @PostMapping("/add_faculty")
@@ -44,5 +54,43 @@ public class UniverController {
         model.addAttribute("faculty", faculty.get());
         model.addAttribute("students", faculty.get().getStudents());
         return "students_by_faculty";
+    }
+
+    @GetMapping("/edit_faculty")
+    public String editFaculty(@RequestParam("id") int id, Model model) {
+        Optional<Faculty> faculty = facultyRepository.findById(id);
+        if (faculty.isEmpty()) {
+            return "redirect:/faculties";
+        }
+        model.addAttribute("faculty", faculty.get());
+        return "edit_faculty";
+    }
+
+    @PostMapping("/update_faculty")
+    public String updateFaculty(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("director") String director) {
+        Optional<Faculty> faculty = facultyRepository.findById(id);
+        if (faculty.isEmpty()) {
+            return "redirect:/faculties";
+        }
+        Faculty f = faculty.get();
+        f.setName(name);
+        f.setDirector(director);
+        facultyRepository.save(f);
+        return "redirect:/faculties";
+    }
+
+    @GetMapping("/delete_faculty/{id}")
+    public String deleteFaculty(@PathVariable("id") int id) {
+        facultyRepository.deleteById(id);
+        return "redirect:/faculties";
+    }
+
+    @GetMapping("/top_rating_student")
+    public String topRatingStudent(Model model) {
+
+        List<Student> topStudents = studentRepository.findAllStudentsWithMaxRating();
+
+        model.addAttribute("topStudents", topStudents);
+        return "show_student";
     }
 }

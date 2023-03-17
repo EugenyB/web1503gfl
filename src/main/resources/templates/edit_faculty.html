@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Faculty</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link th:rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}">
+</head>
+<body>
+<form th:action="@{/update_faculty}" method="post" th:object="${faculty}">
+    <input type="hidden" th:field="*{id}">
+    <label for="f_name">Faculty name</label><br/>
+    <input type="text" id="f_name" th:field="*{name}"><br/>
+    <label for="f_director">Director</label><br/>
+    <input type="text" id="f_director" th:field="*{director}"><br/>
+    <input type="submit" value="Update">
+</form>
+<!--  http://localhost:8080/update_faculty?faculty_id=5&name=FES&director=Qaz  -->
+<!--  http://localhost:8080/update_faculty?id=5&name=FES&director=Qaz           -->
+
+<script th:src="@{/webjars/jquery/3.6.3/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/popper.js/1.16.1-1/umd/popper.min.js}"></script>
+</body>
+</html>
